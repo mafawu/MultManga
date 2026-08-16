@@ -1,0 +1,23 @@
+# 依赖与构建产物
+node_modules/
+.pnpm-store/
+dist/
+*.tsbuildinfo
+
+# 数据与运行文件（含用户下载内容、数据库、日志）
+data/
+*.log
+*.db
+*.db-wal
+*.db-shm
+
+# 环境与凭据
+.env
+.env.*
+!.env.example
+
+# 编辑器与系统
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

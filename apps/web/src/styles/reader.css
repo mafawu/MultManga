@@ -1,0 +1,390 @@
+/* ===== 阅读器 ===== */
+.reader {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  z-index: 300;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.reader.center {
+  color: var(--text);
+}
+
+.reader-back-link {
+  color: var(--blue);
+  font-size: 14px;
+}
+
+/* 顶部工具栏 */
+.reader-toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: linear-gradient(rgba(0, 0, 0, 0.85), transparent);
+  color: #fff;
+}
+
+.reader-back {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  max-width: 30vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.reader-back:hover {
+  color: var(--accent);
+}
+
+.reader-title {
+  flex: 1;
+  font-size: 14px;
+  color: #ddd;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reader-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.reader-zoom {
+  color: #fff;
+  font-size: 13px;
+  min-width: 44px;
+  text-align: center;
+}
+
+.reader-toolbar .select {
+  background: rgba(30, 30, 36, 0.9);
+  border-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  font-size: 13px;
+}
+
+.reader-toolbar .btn {
+  font-size: 13px;
+  padding: 5px 11px;
+}
+
+/* 底部信息栏 */
+.reader-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+  color: #fff;
+  font-size: 13px;
+}
+
+.reader-progress {
+  flex: 1;
+}
+
+.reader-progress .progress {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.reader-progress .progress-fill {
+  background: var(--accent);
+}
+
+/* 工具栏显隐开关 */
+.reader-toggle {
+  position: absolute;
+  right: 14px;
+  bottom: 64px;
+  z-index: 25;
+  background: rgba(30, 30, 36, 0.8);
+  border: 1px solid #333;
+  color: #fff;
+  border-radius: 999px;
+  width: 38px;
+  height: 38px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* 纵向模式 */
+.reader-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.reader-content.vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 56px 0 40px;
+  scroll-behavior: smooth;
+}
+
+.reader-vimg {
+  width: 100%;
+  max-width: 1000px;
+  display: block;
+}
+
+/* 分页模式 */
+.reader-content.paged {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.reader-pimg-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+}
+
+.reader-pimg {
+  max-width: 100%;
+  max-height: calc(100vh - 140px);
+  object-fit: contain;
+  border-radius: 2px;
+}
+
+.reader-zone {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.reader-zone.left {
+  left: 0;
+}
+
+.reader-zone.right {
+  right: 0;
+}
+
+.reader-zone:disabled {
+  cursor: default;
+}
+
+/* 图片失败 */
+.img-fail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #999;
+  font-size: 13px;
+  padding: 40px;
+}
+
+.img-fail button {
+  background: #333;
+  border: 1px solid #555;
+  color: #fff;
+  border-radius: 6px;
+  padding: 5px 14px;
+  cursor: pointer;
+}
+
+/* 章节边界提示 */
+.reader-nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.reader-nav-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 22px 26px;
+  max-width: 360px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: center;
+}
+
+.reader-nav-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.reader-nav-sub {
+  color: var(--text-2);
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reader-nav-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.reader-nav-hint {
+  color: var(--text-2);
+  font-size: 12px;
+}
+
+/* 章末 */
+.reader-end {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 40px 20px;
+  color: #bbb;
+  font-size: 14px;
+}
+
+.reader-end.overlay {
+  position: absolute;
+  inset: 0;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 15;
+  padding: 0;
+}
+
+/* 目录抽屉 */
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 60;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.drawer-panel {
+  width: min(360px, 88vw);
+  background: var(--card);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.drawer-head h3 {
+  margin: 0;
+}
+
+.drawer-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.drawer-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  font-size: 13.5px;
+}
+
+.drawer-item:hover {
+  background: var(--card-hover);
+}
+
+.drawer-item.active {
+  background: var(--accent-weak);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.drawer-no {
+  color: var(--text-2);
+  font-size: 12px;
+  min-width: 28px;
+  text-align: right;
+}
+
+.drawer-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.drawer-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+.drawer-dot.done {
+  background: var(--green);
+}
+
+@media (max-width: 900px) {
+  .reader-toolbar {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .reader-actions {
+    width: 100%;
+  }
+
+  .reader-title {
+    max-width: 50vw;
+  }
+}
